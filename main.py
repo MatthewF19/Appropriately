@@ -1,6 +1,7 @@
 import psycopg2
 from sshtunnel import SSHTunnelForwarder
 from dotenv import load_dotenv
+from rate import rate_movie
 import os
 
 from login import login
