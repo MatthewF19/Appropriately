@@ -3,6 +3,8 @@ from sshtunnel import SSHTunnelForwarder
 from dotenv import load_dotenv
 import os
 
+from login import login
+
 def main():
     # load sensitive info
     load_dotenv()
@@ -29,8 +31,8 @@ def main():
             curs = conn.cursor()
             print("Database connection established")
 
-            curs.execute('SELECT * FROM movie')
-            print(curs.fetchall())
+            userid = login(conn, curs)
+            print(userid)
 
             conn.close()
     except:
