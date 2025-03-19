@@ -19,7 +19,7 @@ def login(conn, curs):
         curs.execute("""
             INSERT INTO users(username, password, creationdate, lastaccessdate, firstname, lastname, email, dob)
             VALUES(%s, %s, %s, %s, %s, %s, %s, %s)""",
-            (username, password, date.today(), datetime.now(), first, last, email, dob))
+            (username, password, datetime.now(), datetime.now(), first, last, email, dob))
         conn.commit()
 
         curs.execute("SELECT id FROM users WHERE username=%s", (username,))
