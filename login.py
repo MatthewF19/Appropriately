@@ -1,6 +1,7 @@
 from datetime import date
 from datetime import datetime
 
+
 def login(conn, curs):
     username = input("username: ")
     password = input("password: ")

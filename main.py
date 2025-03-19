@@ -5,12 +5,13 @@ import os
 
 from login import login
 
+
 def main():
     # load sensitive info
     load_dotenv()
     username = os.getenv('USERNAME')
     password = os.getenv('PASSWORD')
-    dbName = "p32001_34"
+    db_name = "p32001_34"
 
     try:
         with SSHTunnelForwarder(('starbug.cs.rit.edu', 22),
@@ -20,7 +21,7 @@ def main():
             server.start()
             print("SSH tunnel established")
             params = {
-                'database': dbName,
+                'database': db_name,
                 'user': username,
                 'password': password,
                 'host': 'localhost',
@@ -37,6 +38,7 @@ def main():
             conn.close()
     except:
         print("Connection failed")
+
 
 if __name__ == '__main__':
     main()
