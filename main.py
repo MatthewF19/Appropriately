@@ -5,13 +5,16 @@ from rate import rate_movie
 import os
 
 from login import login
+from collection import create_collection
+from collection import delete_collection
+from collection import rename_collection
 
 
 def main():
     # load sensitive info
     load_dotenv()
-    username = os.getenv('USERNAME')
-    password = os.getenv('PASSWORD')
+    username = os.getenv('RIT_USERNAME')
+    password = os.getenv('RIT_PASSWORD')
     db_name = "p32001_34"
 
     try:
@@ -37,8 +40,8 @@ def main():
             print(userid)
 
             conn.close()
-    except:
-        print("Connection failed")
+    except Exception as e:
+        print("Connection failed:", e)
 
 
 if __name__ == '__main__':
