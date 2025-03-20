@@ -1,4 +1,7 @@
-def rate_movie(conn, user_id, movie_id, rating):
+def rate_movie(conn):
+    user_id = input("Enter your user ID: ")
+    movie_id = input("Enter your movie ID: ")
+    rating = int(input("Enter your rating: "))
     if not (0 <= rating <= 5):
         raise ValueError("Rating must be between 0 and 5")
 
