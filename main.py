@@ -8,6 +8,9 @@ from login import login
 from collection import create_collection
 from collection import delete_collection
 from collection import rename_collection
+from collection import view_collections
+from collection import add_movie
+from collection import delete_movie
 from search import search_user_by_email
 from rate import rate_movie
 from social import follow_user
@@ -63,18 +66,15 @@ def main():
                     case "CC":
                         create_collection(conn, curs, userid)
                     case "LC":
-                        # (not merged into main yet)
-                        # view_collections(conn, curs, userid) 
+                        view_collections(conn, curs, userid) 
                         print("NOT IMPLEMENTED")
                     case "PC":
                         print("NOT IMPLEMENTED")
                     case "AC":
-                        # (not merged into main yet)
-                        # add_movie(conn, curs, userid)
+                        add_movie(conn, curs, userid)
                         print("NOT IMPLEMENTED")
                     case "RMC":
-                        # (not merged into main yet)
-                        # delete_movie(conn, curs, userid)
+                        delete_movie(conn, curs, userid)
                         print("NOT IMPLEMENTED")
                     case "RNC":
                         rename_collection(conn, curs, userid)
@@ -94,6 +94,7 @@ def main():
                         # TODO make fn prompt for ids
                         follow_user(conn, frid, fdid)
                     case "UU":
+                        # TODO make fn prompt for ids
                         unfollow_user(conn, frid, fdid)
                     case "Q":
                         # nop
