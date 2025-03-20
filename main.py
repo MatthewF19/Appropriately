@@ -57,7 +57,7 @@ def main():
 
             userid = login(conn, curs)
 
-            action = input("What do you want to do?\n-> ")
+            action = input("What do you want to do?\n-> ").upper()
             while(action != "Q"):
                 match action:
                     case "CC":
@@ -100,6 +100,8 @@ def main():
                         print("", end="") 
                     case _: 
                         commands()
+            
+                action = input("-> ")
 
             conn.close()
     except Exception as e:
