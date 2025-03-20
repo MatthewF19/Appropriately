@@ -79,6 +79,8 @@ def add_movie(conn, curs, userid):
     if check is None:
         curs.execute("INSERT INTO has_movie(collectionid, movieid) VALUES(%s, %s)", (collection, movie))
         conn.commit()
+    else:
+        print("Movie already added!")
 
 def delete_movie(conn, curs, userid):
     collection_name = input("Enter the name of the collection you would like to delete from: ")
@@ -95,5 +97,10 @@ def delete_movie(conn, curs, userid):
         print("Movie not found!")
         return
 
-    curs.execute("DELETE FROM has_movie WHERE collectionid=%s and movieid=%s", (collection, movie))
-    conn.commit()
+    curs.execute("SELECT movieid FROM has_movie WHERE collectionid=%s AND movieid=%s", (collection, movie))
+    check = curs.fetchone()
+    if check is None:
+        curs.execute("DELETE FROM has_movie WHERE collectionid=%s and movieid=%s", (collection, movie))
+        conn.commit()
+    else:
+        print("Movie not in collection!")
