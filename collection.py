@@ -57,7 +57,7 @@ def view_collections(conn, curs, userid):
     """
 
     curs.execute(query, (userid,))
-    return curs.fetchall()
+    print(curs.fetchall())
 
 
 def add_movie(conn, curs, userid):
