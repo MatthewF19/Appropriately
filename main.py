@@ -67,15 +67,12 @@ def main():
                         create_collection(conn, curs, userid)
                     case "LC":
                         view_collections(conn, curs, userid)
-                        print("NOT IMPLEMENTED")
                     case "PC":
                         print("NOT IMPLEMENTED")
                     case "AC":
                         add_movie(conn, curs, userid)
-                        print("NOT IMPLEMENTED")
                     case "RMC":
                         delete_movie(conn, curs, userid)
-                        print("NOT IMPLEMENTED")
                     case "RNC":
                         rename_collection(conn, curs, userid)
                     case "DC":
