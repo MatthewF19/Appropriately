@@ -12,6 +12,7 @@ from search import search_user_by_email
 from rate import rate_movie
 from social import follow_user
 from social import unfollow_user
+from movies import search_movie
 
 def commands():
     print("Create a collection:             CC")
@@ -81,7 +82,7 @@ def main():
                     case "DC":
                         delete_collection(conn, curs, userid)
                     case "SM":
-                        print("NOT IMPLEMENTED")
+                        search_movie(conn)
                     case "RM":
                         # TODO make fn prompt for movieid/rating
                         rate_movie(conn, userid, movieid, rating)
