@@ -13,6 +13,7 @@ from rate import rate_movie
 from social import follow_user
 from social import unfollow_user
 
+
 def commands():
     print("Create a collection:             CC")
     print("List all collections:            LC")
@@ -28,6 +29,7 @@ def commands():
     print("Follow user:                     FU")
     print("Unfollow user:                   UU")
     print("Exit:                            Q")
+
 
 def main():
     # load sensitive info
@@ -58,7 +60,7 @@ def main():
             userid = login(conn, curs)
 
             action = input("What do you want to do?\n-> ").upper()
-            while(action != "Q"):
+            while action != "Q":
                 match action:
                     case "CC":
                         create_collection(conn, curs, userid)
@@ -97,10 +99,10 @@ def main():
                         unfollow_user(conn, frid, fdid)
                     case "Q":
                         # nop
-                        print("", end="") 
-                    case _: 
+                        print("", end="")
+                    case _:
                         commands()
-            
+
                 action = input("-> ")
 
             conn.close()

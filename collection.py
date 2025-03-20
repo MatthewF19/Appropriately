@@ -44,6 +44,7 @@ def rename_collection(conn, curs, userid):
     conn.commit()
     print("Collection renamed successfully!")
 
+
 def view_collections(conn, curs, userid):
     query = """
     SELECT c.name, COUNT(*) AS numMovies, SUM(m.length)
@@ -57,6 +58,7 @@ def view_collections(conn, curs, userid):
 
     curs.execute(query, (userid,))
     return curs.fetchall()
+
 
 def add_movie(conn, curs, userid):
     collection_name = input("Enter the name of the collection you would like to add to: ")
@@ -80,6 +82,7 @@ def add_movie(conn, curs, userid):
         conn.commit()
     else:
         print("Movie already added!")
+
 
 def delete_movie(conn, curs, userid):
     collection_name = input("Enter the name of the collection you would like to delete from: ")
