@@ -55,7 +55,6 @@ def view_collections(conn, curs, userid):
     ORDER BY c.name
     """
 
-
     curs.execute(query, (userid,))
     return curs.fetchall()
 
@@ -100,7 +99,7 @@ def delete_movie(conn, curs, userid):
     curs.execute("SELECT movieid FROM has_movie WHERE collectionid=%s AND movieid=%s", (collection, movie))
     check = curs.fetchone()
     if check is None:
-        curs.execute("DELETE FROM has_movie WHERE collectionid=%s and movieid=%s", (collection, movie))
-        conn.commit()
-    else:
         print("Movie not in collection!")
+        return
+    curs.execute("DELETE FROM has_movie WHERE collectionid=%s and movieid=%s", (collection, movie))
+    conn.commit()
