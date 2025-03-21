@@ -107,45 +107,7 @@ def main():
 
             userid = login(conn, curs)
 
-            action = input("What do you want to do?\n-> ").upper()
-            while action != "Q":
-                match action:
-                    case "CC":
-                        create_collection(conn, curs, userid)
-                    case "LC":
-                        view_collections(conn, curs, userid)
-                    case "PC":
-                        watch(conn, userid, "collection")
-                    case "AC":
-                        add_movie(conn, curs, userid)
-                    case "RMC":
-                        delete_movie(conn, curs, userid)
-                    case "RNC":
-                        rename_collection(conn, curs, userid)
-                    case "DC":
-                        delete_collection(conn, curs, userid)
-                    case "SM":
-                        search_movie(conn)
-                    case "RM":
-                        # TODO make fn prompt for movieid/rating
-                        rate_movie(conn)
-                    case "PM":
-                        watch(conn, userid, "movie")
-                    case "SU":
-                        # TODO make fn prompt for email
-                        search_user_by_email(conn)
-                    case "FU":
-                        # TODO make fn prompt for ids
-                        follow_user(conn)
-                    case "UU":
-                        unfollow_user(conn)
-                    case "Q":
-                        # nop
-                        print("", end="")
-                    case _:
-                        commands()
-
-                action = input("-> ")
+            prompt(conn, curs, userid)
 
             conn.close()
     except Exception as e:
