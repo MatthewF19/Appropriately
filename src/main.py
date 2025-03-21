@@ -57,19 +57,15 @@ def prompt(conn, curs, userid):
             case "SM":
                 print("NOT IMPLEMENTED")
             case "RM":
-                # TODO make fn prompt for movieid/rating
-                rate_movie(conn, userid, movieid, rating)
+                rate_movie(conn, userid)
             case "PM":
                 print("NOT IMPLEMENTED")
             case "SU":
-                # TODO make fn prompt for email
-                search_user_by_email(conn, email)
+                search_user_by_email(conn)
             case "FU":
-                # TODO make fn prompt for ids
-                follow_user(conn, frid, fdid)
+                follow_user(conn)
             case "UU":
-                # TODO make fn prompt for ids
-                unfollow_user(conn, frid, fdid)
+                unfollow_user(conn)
             case "Q":
                 # nop
                 print("", end="") 
