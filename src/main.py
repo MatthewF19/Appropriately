@@ -35,11 +35,10 @@ def commands():
     print("Unfollow user:                   UU")
     print("Exit:                            Q")
 
-<<<<<<< HEAD:src/main.py
-=======
+
 def prompt(conn, curs, userid):
     action = input("What do you want to do?\n-> ").upper()
-    while(action != "Q"):
+    while action != "Q":
         match action:
             case "CC":
                 create_collection(conn, curs, userid)
@@ -78,7 +77,7 @@ def prompt(conn, curs, userid):
                 commands()
     
         action = input("-> ").upper()
->>>>>>> 7427a9825a36edf41233daf5d2fd0e48f6f52cc3:main.py
+
 
 def main():
     # load sensitive info
