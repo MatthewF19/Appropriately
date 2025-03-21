@@ -69,7 +69,7 @@ def main():
                     case "LC":
                         view_collections(conn, curs, userid)
                     case "PC":
-                        print("NOT IMPLEMENTED")
+                        watch(conn, userid, "collection")
                     case "AC":
                         add_movie(conn, curs, userid)
                     case "RMC":
@@ -84,7 +84,7 @@ def main():
                         # TODO make fn prompt for movieid/rating
                         rate_movie(conn)
                     case "PM":
-                        watch(conn)
+                        watch(conn, userid, "movie")
                     case "SU":
                         # TODO make fn prompt for email
                         search_user_by_email(conn)
