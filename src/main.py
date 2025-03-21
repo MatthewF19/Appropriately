@@ -19,6 +19,7 @@ from movies import search_movie
 from watch import watch
 from rate import rate_movie
 
+
 def commands():
     print("Create a collection:             CC")
     print("List all collections:            LC")
@@ -35,9 +36,10 @@ def commands():
     print("Unfollow user:                   UU")
     print("Exit:                            Q")
 
+
 def prompt(conn, curs, userid):
     action = input("What do you want to do?\n-> ").upper()
-    while(action != "Q"):
+    while action != "Q":
         match action:
             case "CC":
                 create_collection(conn, curs, userid)
@@ -73,6 +75,7 @@ def prompt(conn, curs, userid):
     
         action = input("-> ").upper()
 
+
 def main():
     # load sensitive info
     load_dotenv()
@@ -100,9 +103,9 @@ def main():
             print("Database connection established")
 
             userid = login(conn, curs)
-            print(userid)
+
             prompt(conn, curs, userid)
-    
+
             conn.close()
     except Exception as e:
         print("Connection failed:", e)
