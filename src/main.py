@@ -36,7 +36,7 @@ def commands():
     print("Exit:                            Q")
 
 
-def prompt(conn, curs, userid):
+def run_action(conn, curs, userid, action):
     match action:
         case "CC":
             create_collection(conn, curs, userid)
