@@ -79,6 +79,7 @@ def prompt_loop(conn, curs, userid):
     action = input("What do you want to do?\n-> ").upper()
     while action != "Q":
         run_action(conn, curs, userid, action)
+        
         action = input("-> ").upper()
 
 
