@@ -34,6 +34,48 @@ def commands():
     print("Unfollow user:                   UU")
     print("Exit:                            Q")
 
+def prompt(conn, curs, userid):
+    action = input("What do you want to do?\n-> ").upper()
+    while(action != "Q"):
+        match action:
+            case "CC":
+                create_collection(conn, curs, userid)
+            case "LC":
+                view_collections(conn, curs, userid) 
+            case "PC":
+                print("NOT IMPLEMENTED")
+            case "AC":
+                add_movie(conn, curs, userid)
+            case "RMC":
+                delete_movie(conn, curs, userid)
+            case "RNC":
+                rename_collection(conn, curs, userid)
+            case "DC":
+                delete_collection(conn, curs, userid)
+            case "SM":
+                print("NOT IMPLEMENTED")
+            case "RM":
+                # TODO make fn prompt for movieid/rating
+                rate_movie(conn, userid, movieid, rating)
+            case "PM":
+                print("NOT IMPLEMENTED")
+            case "SU":
+                # TODO make fn prompt for email
+                search_user_by_email(conn, email)
+            case "FU":
+                # TODO make fn prompt for ids
+                follow_user(conn, frid, fdid)
+            case "UU":
+                # TODO make fn prompt for ids
+                unfollow_user(conn, frid, fdid)
+            case "Q":
+                # nop
+                print("", end="") 
+            case _: 
+                commands()
+    
+        action = input("-> ").upper()
+
 def main():
     # load sensitive info
     load_dotenv()
@@ -61,47 +103,9 @@ def main():
             print("Database connection established")
 
             userid = login(conn, curs)
-
-            action = input("What do you want to do?\n-> ").upper()
-            while(action != "Q"):
-                match action:
-                    case "CC":
-                        create_collection(conn, curs, userid)
-                    case "LC":
-                        view_collections(conn, curs, userid)
-                    case "PC":
-                        watch(conn, userid, "collection")
-                    case "AC":
-                        add_movie(conn, curs, userid)
-                    case "RMC":
-                        delete_movie(conn, curs, userid)
-                    case "RNC":
-                        rename_collection(conn, curs, userid)
-                    case "DC":
-                        delete_collection(conn, curs, userid)
-                    case "SM":
-                        search_movie(conn)
-                    case "RM":
-                        # TODO make fn prompt for movieid/rating
-                        rate_movie(conn)
-                    case "PM":
-                        watch(conn, userid, "movie")
-                    case "SU":
-                        # TODO make fn prompt for email
-                        search_user_by_email(conn)
-                    case "FU":
-                        # TODO make fn prompt for ids
-                        follow_user(conn)
-                    case "UU":
-                        unfollow_user(conn)
-                    case "Q":
-                        # nop
-                        print("", end="") 
-                    case _: 
-                        commands()
-            
-                action = input("-> ")
-
+            print(userid)
+            prompt(conn, curs, userid)
+    
             conn.close()
     except Exception as e:
         print("Connection failed:", e)
