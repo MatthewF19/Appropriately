@@ -35,6 +35,50 @@ def commands():
     print("Unfollow user:                   UU")
     print("Exit:                            Q")
 
+<<<<<<< HEAD:src/main.py
+=======
+def prompt(conn, curs, userid):
+    action = input("What do you want to do?\n-> ").upper()
+    while(action != "Q"):
+        match action:
+            case "CC":
+                create_collection(conn, curs, userid)
+            case "LC":
+                view_collections(conn, curs, userid) 
+            case "PC":
+                print("NOT IMPLEMENTED")
+            case "AC":
+                add_movie(conn, curs, userid)
+            case "RMC":
+                delete_movie(conn, curs, userid)
+            case "RNC":
+                rename_collection(conn, curs, userid)
+            case "DC":
+                delete_collection(conn, curs, userid)
+            case "SM":
+                print("NOT IMPLEMENTED")
+            case "RM":
+                # TODO make fn prompt for movieid/rating
+                rate_movie(conn, userid, movieid, rating)
+            case "PM":
+                print("NOT IMPLEMENTED")
+            case "SU":
+                # TODO make fn prompt for email
+                search_user_by_email(conn, email)
+            case "FU":
+                # TODO make fn prompt for ids
+                follow_user(conn, frid, fdid)
+            case "UU":
+                # TODO make fn prompt for ids
+                unfollow_user(conn, frid, fdid)
+            case "Q":
+                # nop
+                print("", end="") 
+            case _: 
+                commands()
+    
+        action = input("-> ").upper()
+>>>>>>> 7427a9825a36edf41233daf5d2fd0e48f6f52cc3:main.py
 
 def main():
     # load sensitive info
