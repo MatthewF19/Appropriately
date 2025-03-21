@@ -45,7 +45,7 @@ def rename_collection(conn, curs, userid):
     print("Collection renamed successfully!")
 
 
-ef view_collections(conn, curs, userid):
+def view_collections(conn, curs, userid):
     query = """
     SELECT c.name, COUNT(m.id) AS numMovies, COALESCE(SUM(m.length), 0)
     FROM collection c
