@@ -37,41 +37,49 @@ def commands():
 
 
 def prompt(conn, curs, userid):
+    match action:
+        case "CC":
+            create_collection(conn, curs, userid)
+        case "LC":
+            view_collections(conn, curs, userid)
+        case "PC":
+            print("NOT IMPLEMENTED")
+        case "AC":
+            add_movie(conn, curs, userid)
+        case "RMC":
+            delete_movie(conn, curs, userid)
+        case "RNC":
+            rename_collection(conn, curs, userid)
+        case "DC":
+            delete_collection(conn, curs, userid)
+        case "SM":
+            print("NOT IMPLEMENTED")
+        case "RM":
+            # TODO make fn prompt for movieid/rating
+            rate_movie(conn, userid, movieid, rating)
+        case "PM":
+            print("NOT IMPLEMENTED")
+        case "SU":
+            # TODO make fn prompt for email
+            search_user_by_email(conn, email)
+        case "FU":
+            # TODO make fn prompt for ids
+            follow_user(conn, frid, fdid)
+        case "UU":
+            # TODO make fn prompt for ids
+            unfollow_user(conn, frid, fdid)
+        case "Q":
+            # nop
+            print("", end="")
+        case _:
+            commands()
+
+
+def prompt_loop(conn, curs, userid):
     action = input("What do you want to do?\n-> ").upper()
     while action != "Q":
-        match action:
-            case "CC":
-                create_collection(conn, curs, userid)
-            case "LC":
-                view_collections(conn, curs, userid) 
-            case "PC":
-                print("NOT IMPLEMENTED")
-            case "AC":
-                add_movie(conn, curs, userid)
-            case "RMC":
-                delete_movie(conn, curs, userid)
-            case "RNC":
-                rename_collection(conn, curs, userid)
-            case "DC":
-                delete_collection(conn, curs, userid)
-            case "SM":
-                print("NOT IMPLEMENTED")
-            case "RM":
-                rate_movie(conn, userid)
-            case "PM":
-                print("NOT IMPLEMENTED")
-            case "SU":
-                search_user_by_email(conn)
-            case "FU":
-                follow_user(conn)
-            case "UU":
-                unfollow_user(conn)
-            case "Q":
-                # nop
-                print("", end="") 
-            case _: 
-                commands()
-    
+        run_action(conn, curs, userid, action)
+        
         action = input("-> ").upper()
 
 
@@ -103,7 +111,7 @@ def main():
 
             userid = login(conn, curs)
 
-            prompt(conn, curs, userid)
+            prompt_loop(conn, curs, userid)
 
             conn.close()
     except Exception as e:
