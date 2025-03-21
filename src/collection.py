@@ -45,9 +45,9 @@ def rename_collection(conn, curs, userid):
     print("Collection renamed successfully!")
 
 
-def view_collections(conn, curs, userid):
+ef view_collections(conn, curs, userid):
     query = """
-    SELECT c.name, COUNT(*) AS numMovies, SUM(m.length)
+    SELECT c.name, COUNT(m.id) AS numMovies, COALESCE(SUM(m.length), 0)
     FROM collection c
     LEFT JOIN has_movie hm ON c.id=hm.collectionid
     LEFT JOIN movie m ON hm.movieid=m.id
@@ -57,7 +57,10 @@ def view_collections(conn, curs, userid):
     """
 
     curs.execute(query, (userid,))
-    print(curs.fetchall())
+    collections = curs.fetchall()
+
+    for collection in collections:
+        print(collection[0], collection[1], str(collection[2]//60) + ":" + str(collection[2]%60))
 
 
 def add_movie(conn, curs, userid):
