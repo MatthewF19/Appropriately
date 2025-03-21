@@ -15,6 +15,8 @@ from search import search_user_by_email
 from rate import rate_movie
 from social import follow_user
 from social import unfollow_user
+from movies import search_movie
+from watch import watch
 
 
 def commands():
@@ -70,7 +72,7 @@ def main():
                     case "LC":
                         view_collections(conn, curs, userid)
                     case "PC":
-                        print("NOT IMPLEMENTED")
+                        watch(conn, userid, "collection")
                     case "AC":
                         add_movie(conn, curs, userid)
                     case "RMC":
@@ -80,20 +82,20 @@ def main():
                     case "DC":
                         delete_collection(conn, curs, userid)
                     case "SM":
-                        print("NOT IMPLEMENTED")
+                        search_movie(conn)
                     case "RM":
                         # TODO make fn prompt for movieid/rating
-                        rate_movie(conn, userid, movieid, rating)
+                        rate_movie(conn)
                     case "PM":
-                        print("NOT IMPLEMENTED")
+                        watch(conn, userid, "movie")
                     case "SU":
                         # TODO make fn prompt for email
-                        search_user_by_email(conn, email)
+                        search_user_by_email(conn)
                     case "FU":
                         # TODO make fn prompt for ids
-                        follow_user(conn, frid, fdid)
+                        follow_user(conn)
                     case "UU":
-                        unfollow_user(conn, frid, fdid)
+                        unfollow_user(conn)
                     case "Q":
                         # nop
                         print("", end="")
