@@ -1,7 +1,6 @@
 import psycopg2
 from sshtunnel import SSHTunnelForwarder
 from dotenv import load_dotenv
-from rate import rate_movie
 import os
 
 from login import login
@@ -17,6 +16,7 @@ from social import follow_user
 from social import unfollow_user
 from movies import search_movie
 from watch import watch
+from rate import rate_movie
 
 
 def commands():
@@ -37,49 +37,41 @@ def commands():
 
 
 def prompt(conn, curs, userid):
-    match action:
-        case "CC":
-            create_collection(conn, curs, userid)
-        case "LC":
-            view_collections(conn, curs, userid)
-        case "PC":
-            print("NOT IMPLEMENTED")
-        case "AC":
-            add_movie(conn, curs, userid)
-        case "RMC":
-            delete_movie(conn, curs, userid)
-        case "RNC":
-            rename_collection(conn, curs, userid)
-        case "DC":
-            delete_collection(conn, curs, userid)
-        case "SM":
-            print("NOT IMPLEMENTED")
-        case "RM":
-            # TODO make fn prompt for movieid/rating
-            rate_movie(conn, userid, movieid, rating)
-        case "PM":
-            print("NOT IMPLEMENTED")
-        case "SU":
-            # TODO make fn prompt for email
-            search_user_by_email(conn, email)
-        case "FU":
-            # TODO make fn prompt for ids
-            follow_user(conn, frid, fdid)
-        case "UU":
-            # TODO make fn prompt for ids
-            unfollow_user(conn, frid, fdid)
-        case "Q":
-            # nop
-            print("", end="")
-        case _:
-            commands()
-
-
-def prompt_loop(conn, curs, userid):
     action = input("What do you want to do?\n-> ").upper()
     while action != "Q":
-        run_action(conn, curs, userid, action)
-        
+        match action:
+            case "CC":
+                create_collection(conn, curs, userid)
+            case "LC":
+                view_collections(conn, curs, userid) 
+            case "PC":
+                watch(conn, userid, "collection")
+            case "AC":
+                add_movie(conn, curs, userid)
+            case "RMC":
+                delete_movie(conn, curs, userid)
+            case "RNC":
+                rename_collection(conn, curs, userid)
+            case "DC":
+                delete_collection(conn, curs, userid)
+            case "SM":
+                search_movie(conn)
+            case "RM":
+                rate_movie(conn)
+            case "PM":
+                watch(conn, userid, "movie")
+            case "SU":
+                search_user_by_email(conn)
+            case "FU":
+                follow_user(conn)
+            case "UU":
+                unfollow_user(conn)
+            case "Q":
+                # nop
+                print("", end="") 
+            case _: 
+                commands()
+    
         action = input("-> ").upper()
 
 
