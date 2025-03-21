@@ -1,4 +1,6 @@
-def follow_user(conn, follower_id, followed_id):
+def follow_user(conn):
+    follower_id = input("Enter the follower id: ")
+    followed_id = input("Enter the following id: ")
     with conn.cursor() as cur:
         # Check if the follow relationship already exists
         cur.execute(
@@ -18,7 +20,9 @@ def follow_user(conn, follower_id, followed_id):
             print(f"User {follower_id} now follows user {followed_id}.")
 
 
-def unfollow_user(conn, follower_id, followed_id):
+def unfollow_user(conn):
+    follower_id = input("Enter the follower id: ")
+    followed_id = input("Enter the following id: ")
     with conn.cursor() as cur:
         # Check if the follow relationship exists
         cur.execute(
