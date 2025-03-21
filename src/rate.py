@@ -1,5 +1,4 @@
-def rate_movie(conn):
-    user_id = input("Enter your user ID: ")
+def rate_movie(conn, user_id):
     movie_id = input("Enter your movie ID: ")
     rating = int(input("Enter your rating: "))
     if not (0 <= rating <= 5):

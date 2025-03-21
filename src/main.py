@@ -103,7 +103,7 @@ def main():
 
             userid = login(conn, curs)
 
-            prompt(conn, curs, userid)
+            prompt_loop(conn, curs, userid)
 
             conn.close()
     except Exception as e:
