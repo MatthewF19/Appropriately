@@ -1,7 +1,6 @@
 import psycopg2
 from sshtunnel import SSHTunnelForwarder
 from dotenv import load_dotenv
-from rate import rate_movie
 import os
 
 from login import login
@@ -17,6 +16,7 @@ from social import follow_user
 from social import unfollow_user
 from movies import search_movie
 from watch import watch
+from rate import rate_movie
 
 
 def commands():
@@ -70,17 +70,15 @@ def run_action(conn, curs, userid, action):
             unfollow_user(conn, frid, fdid)
         case "Q":
             # nop
-            print("", end="")
+            return "exit"
         case _:
             commands()
 
 
 def prompt_loop(conn, curs, userid):
-    action = input("What do you want to do?\n-> ").upper()
-    while action != "Q":
-        run_action(conn, curs, userid, action)
-        
-        action = input("-> ").upper()
+    action = input("What would you like to do? ")
+    while run_action(conn, curs, userid, action) != "exit":
+        action = input("-> ")
 
 
 def main():
