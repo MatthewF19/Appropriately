@@ -119,5 +119,4 @@ def movie(conn, type):
     print(param)
     with conn.cursor() as curs:
         curs.execute(query, param)
-        results = curs.fetchall()
     return results

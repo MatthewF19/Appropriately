@@ -1,5 +1,16 @@
 def rate_movie(conn, user_id):
-    movie_id = input("Enter your movie ID: ")
+    movie_name = input("Enter the movie name: ")
+
+    with conn.cursor() as cursor:
+        cursor.execute(
+            'SELECT "id", "title" FROM Movie WHERE "title" ILIKE %s ORDER BY "title" ASC LIMIT 1',
+            (f"%{movie_name}%",)
+        )
+        result = cursor.fetchone()
+    if not result:
+        print("No movies found with that name")
+        return
+    movie_id, title = result
     rating = int(input("Enter your rating: "))
     if not (0 <= rating <= 5):
         raise ValueError("Rating must be between 0 and 5")
