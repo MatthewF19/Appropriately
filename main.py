@@ -15,6 +15,7 @@ from search import search_user_by_email
 from rate import rate_movie
 from social import follow_user
 from social import unfollow_user
+from watch import watch
 
 def commands():
     print("Create a collection:             CC")
@@ -83,7 +84,7 @@ def main():
                         # TODO make fn prompt for movieid/rating
                         rate_movie(conn)
                     case "PM":
-                        print("NOT IMPLEMENTED")
+                        watch(conn)
                     case "SU":
                         # TODO make fn prompt for email
                         search_user_by_email(conn)
