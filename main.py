@@ -15,6 +15,8 @@ from search import search_user_by_email
 from rate import rate_movie
 from social import follow_user
 from social import unfollow_user
+from movies import search_movie
+from watch import watch
 
 def commands():
     print("Create a collection:             CC")
@@ -103,7 +105,7 @@ def main():
             userid = login(conn, curs)
             print(userid)
             prompt(conn, curs, userid)
-
+    
             conn.close()
     except Exception as e:
         print("Connection failed:", e)
