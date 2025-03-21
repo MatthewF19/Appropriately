@@ -15,7 +15,7 @@ def search_movie(conn):
             print("Invalid input. Please try again.")
 
 
-#incomplete
+#incompleted
 def search_by(conn, type):
     search = input("search by? ")
 
