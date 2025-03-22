@@ -249,8 +249,8 @@ def main():
     print("Has_movie:", len(has_movie))
 
     load_dotenv()
-    ssh_username = os.getenv('USERNAME')
-    ssh_password = os.getenv('PASSWORD')
+    ssh_username = os.getenv('RIT_USERNAME')
+    ssh_password = os.getenv('RIT_PASSWORD')
     dbName = "p32001_34"
 
     try:
