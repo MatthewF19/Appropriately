@@ -7,5 +7,5 @@ def search_user_by_email(conn):
         """
         cur.execute(query, (email_query,))
         results = cur.fetchall()
-        print(f"found user with username: {results[0][1]}")
+        print(f"found user with username: {results[0][1]} (id: {results[0][0]})")
     return results
