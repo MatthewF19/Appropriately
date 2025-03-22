@@ -3,9 +3,9 @@ def search_user_by_email(conn):
     with conn.cursor() as cur:
         query = """
             SELECT * FROM Users
-            WHERE email ILIKE %s; --ILIKE for case-insensitive search and wildcard % to match any characters.
+            WHERE email ILIKE %s;
         """
-        search_pattern = f"%{email_query}%"
-        cur.execute(query, (search_pattern,))
+        cur.execute(query, (email_query,))
         results = cur.fetchall()
+        print(f"found user with username: {results[0][1]}")
     return results
