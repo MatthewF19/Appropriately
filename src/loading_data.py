@@ -23,17 +23,25 @@ def generate_movies(num):
         movies.append((movie_id, title, length, MPAA))
     return movies
 
-def generate_platforms():
-    platform_list = [
-        'Netflix', 'Hulu', 'DisneyPlus', 'Peacock', 'Max', 'Amazon Prime Video',
-        'Apple TV+', 'Paramount+', 'HBO Max', 'Discovery+', 'Crunchyroll', 'BritBox',
-        'YouTube Premium', 'Starz', 'Showtime', 'AMC+', 'Sling TV', 'Tubi', 'Pluto TV'
-    ]
+# def generate_platforms():
+#     platform_list = [
+#         'Netflix', 'Hulu', 'DisneyPlus', 'Peacock', 'Max', 'Amazon Prime Video',
+#         'Apple TV+', 'Paramount+', 'HBO Max', 'Discovery+', 'Crunchyroll', 'BritBox',
+#         'YouTube Premium', 'Starz', 'Showtime', 'AMC+', 'Sling TV', 'Tubi', 'Pluto TV'
+#     ]
+#     platforms = []
+#     start_id = 10000
+#     for name in platform_list:
+#         platforms.append((start_id, name))
+#         start_id += 1
+#     return platforms
+
+def generate_platforms(num=5000):
     platforms = []
     start_id = 10000
-    for name in platform_list:
-        platforms.append((start_id, name))
-        start_id += 1
+    for i in range(num):
+        name = f"Platform {i+1}: {fake.company()}"
+        platforms.append((start_id + i, name))
     return platforms
 
 def generate_releases(movies, platforms):
@@ -45,16 +53,25 @@ def generate_releases(movies, platforms):
         releases.append((movie_id, platform_id, release_date))
     return releases
 
-def generate_genres():
-    genre_list = [
-        'Action', 'Comedy', 'Drama', 'Horror', 'Romcom', 'Anime', 'Documentary',
-        'Sci-Fi', 'Thriller', 'Adventure', 'Crime', 'Mystery', 'Fantasy'
-    ]
+# def generate_genres():
+#     genre_list = [
+#         'Action', 'Comedy', 'Drama', 'Horror', 'Romcom', 'Anime', 'Documentary',
+#         'Sci-Fi', 'Thriller', 'Adventure', 'Crime', 'Mystery', 'Fantasy'
+#     ]
+#     genres = []
+#     start_id = 10000
+#     for g in genre_list:
+#         genres.append((start_id, g))
+#         start_id += 1
+#     return genres
+
+def generate_genres(num=5000):
     genres = []
     start_id = 10000
-    for g in genre_list:
-        genres.append((start_id, g))
-        start_id += 1
+    for i in range(num):
+        # Create a unique genre name by combining a base string with a counter and a fake word.
+        genre_name = f"Genre {i+1}: {fake.word().capitalize()}"
+        genres.append((start_id + i, genre_name))
     return genres
 
 def generate_genre_of(movies, genres):
@@ -316,15 +333,27 @@ def main():
             batch_insert(conn,
                 'INSERT INTO Rates ("userid", "movieid", "rating") VALUES (%s, %s, %s) ON CONFLICT DO NOTHING',
                 rates, "Rates")
+
+            users = filter_valid_users(conn, users)
+            watches = generate_watches(users, movies, num_watches)
+
             batch_insert(conn,
                 'INSERT INTO Watches ("startdate", "userid", "movieid", "enddate") VALUES (%s, %s, %s, %s) ON CONFLICT DO NOTHING',
                 watches, "Watches")
+
+            users = filter_valid_users(conn, users)
+            follows = generate_follows(users, num_follows)
+
             batch_insert(conn,
                 'INSERT INTO Follow ("followerid", "followedid") VALUES (%s, %s) ON CONFLICT DO NOTHING',
                 follows, "Follow")
-            # batch_insert(conn,
-            #     'INSERT INTO Collection ("id", "user_id", "name") VALUES (%s, %s, %s) ON CONFLICT ("id") DO NOTHING',
-            #     collections, "Collection")
+
+            users = filter_valid_users(conn, users)
+            collections = generate_collections(users, num_collections)
+            batch_insert(conn,
+                'INSERT INTO Collection ("id", "user_id", "name") VALUES (%s, %s, %s) ON CONFLICT DO NOTHING',
+                collections, "Collection")
+
             batch_insert(conn,
                 'INSERT INTO Has_movie ("collectionid", "movieid") VALUES (%s, %s) ON CONFLICT DO NOTHING',
                 has_movie, "Has_movie")
