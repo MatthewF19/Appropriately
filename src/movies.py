@@ -54,9 +54,9 @@ def sort_by(conn, results, type):
         print("Try title, studio, genre, or date to sort by")
     asc = input("ascending(Enter) or descending(D)?")
     if asc == "D":
-        return sorted(list, key=lambda x: x[0], reverse=True)
+        return reversed(list)
     else:
-        return sorted(list, key=lambda x: x[0])
+        return list
 
 
 def movie(conn, type):
@@ -119,4 +119,5 @@ def movie(conn, type):
     print(param)
     with conn.cursor() as curs:
         curs.execute(query, param)
+        results = curs.fetchall()
     return results
