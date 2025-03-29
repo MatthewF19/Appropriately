@@ -65,13 +65,13 @@ def run_action(conn, curs, userid, action):
         case "SU":
             search_user_by_email(conn)
         case "FU":
-            follow_user(conn)
+            follow_user(conn, userid)
         case "GFRC":
             get_follower_count(conn, userid)
         case "GFNC":
             get_following_count(conn, userid)
         case "UU":
-            unfollow_user(conn)
+            unfollow_user(conn, userid)
         case "Q":
             # nop
             return "exit"
