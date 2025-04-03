@@ -14,6 +14,8 @@ from search import search_user_by_email
 from rate import rate_movie
 from social import follow_user
 from social import unfollow_user
+from social import get_follower_count
+from social import get_following_count
 from movies import search_movie
 from watch import watch
 from rate import rate_movie
@@ -32,6 +34,8 @@ def commands():
     print("Play movie:                      PM")
     print("Search for user:                 SU")
     print("Follow user:                     FU")
+    print("Get follower count:              GFRC")
+    print("Get following count:             GFNC")
     print("Unfollow user:                   UU")
     print("Exit:                            Q")
 
@@ -61,9 +65,13 @@ def run_action(conn, curs, userid, action):
         case "SU":
             search_user_by_email(conn)
         case "FU":
-            follow_user(conn)
+            follow_user(conn, userid)
+        case "GFRC":
+            get_follower_count(conn, userid)
+        case "GFNC":
+            get_following_count(conn, userid)
         case "UU":
-            unfollow_user(conn)
+            unfollow_user(conn, userid)
         case "Q":
             # nop
             return "exit"

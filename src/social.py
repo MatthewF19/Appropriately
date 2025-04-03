@@ -1,5 +1,4 @@
-def follow_user(conn):
-    follower_id = input("Enter the follower id: ")
+def follow_user(conn, follower_id):
     followed_id = input("Enter the following id: ")
     with conn.cursor() as cur:
         # Check if the follow relationship already exists
@@ -20,8 +19,7 @@ def follow_user(conn):
             print(f"User {follower_id} now follows user {followed_id}.")
 
 
-def unfollow_user(conn):
-    follower_id = input("Enter the follower id: ")
+def unfollow_user(conn, follower_id):
     followed_id = input("Enter the following id: ")
     with conn.cursor() as cur:
         # Check if the follow relationship exists
@@ -40,3 +38,23 @@ def unfollow_user(conn):
             )
             conn.commit()
             print(f"User {follower_id} has unfollowed user {followed_id}.")
+
+
+def get_follower_count(conn, user_id):
+    with conn.cursor() as cur:
+        cur.execute(
+            "SELECT COUNT(*) FROM Follow WHERE followedID = %s;",
+            (user_id,)
+        )
+        count = cur.fetchone()[0]
+        print(f"User {user_id} has {count} followers.")
+
+
+def get_following_count(conn, user_id):
+    with conn.cursor() as cur:
+        cur.execute(
+            "SELECT COUNT(*) FROM Follow WHERE followerID = %s;",
+            (user_id,)
+        )
+        count = cur.fetchone()[0]
+        print(f"User {user_id} follows {count} users.")
