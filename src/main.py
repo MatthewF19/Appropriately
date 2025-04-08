@@ -19,6 +19,7 @@ from social import get_following_count
 from movies import search_movie
 from watch import watch
 from rate import rate_movie
+from top5_new_releases import top5_new_releases
 
 
 def commands():
@@ -113,7 +114,8 @@ def main():
 
             userid = login(conn, curs)
 
-            prompt_loop(conn, curs, userid)
+            top5_new_releases(conn, curs)
+            #prompt_loop(conn, curs, userid)
 
             conn.close()
     except Exception as e:
