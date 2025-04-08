@@ -19,7 +19,8 @@ from social import get_following_count
 from movies import search_movie
 from watch import watch
 from rate import rate_movie
-from top5_new_releases import top5_new_releases
+from top_movies import top5_new_releases
+from top_movies import top20_movies_currently
 
 
 def commands():
@@ -38,11 +39,13 @@ def commands():
     print("Get follower count:              GFRC")
     print("Get following count:             GFNC")
     print("Unfollow user:                   UU")
+    print("Get top 5 new releases:          T5N")
+    print("Get top 20 movies currently      T20C")
     print("Exit:                            Q")
 
 
 def run_action(conn, curs, userid, action):
-    match action:
+    match action.upper():
         case "CC":
             create_collection(conn, curs, userid)
         case "LC":
@@ -73,6 +76,10 @@ def run_action(conn, curs, userid, action):
             get_following_count(conn, userid)
         case "UU":
             unfollow_user(conn, userid)
+        case "T5N":
+            top5_new_releases(curs)
+        case "T20C":
+            top20_movies_currently(curs)
         case "Q":
             # nop
             return "exit"
@@ -114,8 +121,7 @@ def main():
 
             userid = login(conn, curs)
 
-            top5_new_releases(conn, curs)
-            #prompt_loop(conn, curs, userid)
+            prompt_loop(conn, curs, userid)
 
             conn.close()
     except Exception as e:
