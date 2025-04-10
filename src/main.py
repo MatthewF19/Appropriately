@@ -17,8 +17,8 @@ from social import unfollow_user
 from social import get_follower_count
 from social import get_following_count
 from movies import search_movie
-from movies import top_10_movies_by_rates
-from movies import top_10_movies_by_watches
+from top_movies import top_10_movies_by_rates
+from top_movies import top_10_movies_by_watches
 from watch import watch
 from rate import rate_movie
 from top_movies import top5_new_releases

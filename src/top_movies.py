@@ -46,3 +46,52 @@ def top20_movies_currently(curs):
     """)
     for i, (title, times_watched) in enumerate(curs.fetchall()):
         print(f"#{i+1}: {title}")
+
+#------------------------------------------------------------------------------
+def top_10_movies_by_rates(conn):
+    year = int(input("From what year would you like to see the Top 10 movies \n"))
+    platform = input("Which platform would you like to focus on \n")
+    with conn.cursor() as cur:
+        query = """
+            SELECT m.id, m.title, AVG(r.rating) AS avg_rating
+            FROM Rates r
+            JOIN Movie m ON r.movieid = m.id
+            JOIN Release rel ON m.id = rel.movieid
+            JOIN Platform p ON rel.platformid = p.id
+            WHERE EXTRACT(YEAR FROM rel.release_date) >= %s
+              AND p.name ILIKE %s
+            GROUP BY m.id, m.title
+            ORDER BY avg_rating DESC
+            LIMIT 10;
+        """
+        cur.execute(query, (year,f"%{platform}%"))
+        results = cur.fetchall()
+
+    print(f"Top 10 movies since {year} on platform matching '{platform}':")
+    for row in results:
+        print(f"Movie ID: {row[0]}, Title: {row[1]}, Average Rating: {row[2]:.2f}")
+
+def top_10_movies_by_watches(conn):
+    year = int(input("From what year would you like to see the Top 10 movies\n"))
+    platform = input("Which platform would you like to focus on \n")
+
+    with conn.cursor() as cur:
+        query = """
+            SELECT m.id, m.title, COUNT(*) AS watch_count
+            FROM Watches w
+            JOIN Movie m ON w."movieid" = m."id"
+            JOIN Release r ON m."id" = r."movieid"
+            JOIN Platform p ON r."platformid" = p."id"
+            WHERE EXTRACT(YEAR FROM r."release_date") >= %s
+              AND p."name" ILIKE %s
+            GROUP BY m."id", m."title"
+            ORDER BY watch_count DESC
+            LIMIT 10;
+        """
+        cur.execute(query, (year, f"%{platform}%"))
+        results = cur.fetchall()
+
+    print(f"Top 10 movies since {year} on platform matching '{platform}' by watch count:")
+    for row in results:
+        print(f"Movie ID: {row[0]}, Title: {row[1]}, Watch Count: {row[2]}")
+
