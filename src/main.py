@@ -21,6 +21,8 @@ from movies import top_10_movies_by_rates
 from movies import top_10_movies_by_watches
 from watch import watch
 from rate import rate_movie
+from top_movies import top5_new_releases
+from top_movies import top20_movies_currently
 
 
 def commands():
@@ -41,11 +43,13 @@ def commands():
     print("Get Top 10 Movies by ratings:    T10R")
     print("Get Top 10 Movies by watches:    T10W")
     print("Unfollow user:                   UU")
+    print("Get top 5 new releases:          T5N")
+    print("Get top 20 movies currently      T20C")
     print("Exit:                            Q")
 
 
 def run_action(conn, curs, userid, action):
-    match action:
+    match action.upper():
         case "CC":
             create_collection(conn, curs)
         case "LC":
@@ -80,6 +84,10 @@ def run_action(conn, curs, userid, action):
             top_10_movies_by_watches(conn)
         case "UU":
             unfollow_user(conn, userid)
+        case "T5N":
+            top5_new_releases(curs)
+        case "T20C":
+            top20_movies_currently(curs)
         case "Q":
             # nop
             return "exit"
