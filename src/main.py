@@ -19,6 +19,7 @@ from social import get_following_count
 from movies import search_movie
 from watch import watch
 from rate import rate_movie
+from hash_existing import hash_existing_passwords
 
 
 def commands():
