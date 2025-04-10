@@ -94,4 +94,17 @@ def top_10_movies_by_watches(conn):
     print(f"Top 10 movies since {year} on platform matching '{platform}' by watch count:")
     for row in results:
         print(f"Movie ID: {row[0]}, Title: {row[1]}, Watch Count: {row[2]}")
+def most_popular_followers(conn, curs, userid):
+    query = """
+    SELECT m.title, count(w.movieid) as times_watched
+    FROM follow f
+    LEFT JOIN watches w ON f.followerid=w.userid
+    LEFT JOIN movie m ON w.movieid=m.id
+    WHERE f.followedid=%s
+    GROUP BY m.title
+    LIMIT 20
+    """
 
+    curs.execute(query, (userid,))
+    for i, (title, times_watched) in enumerate(curs.fetchall()):
+        print(f"#{i + 1}: {title}")
