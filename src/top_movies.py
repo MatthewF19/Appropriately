@@ -4,7 +4,9 @@ from datetime import datetime
 def top5_new_releases(curs):
     now = datetime.now()
     month = now.strftime('%m')
-    month = "0" + str(int(month) - 1)
+    month = str(int(month))
+    if len(month) < 2:
+        month = "0" + month
     year = now.strftime('%Y')
     result = top5_releases_by_month(curs, month, year)
     for i, (title, rating) in enumerate(result):
@@ -94,6 +96,9 @@ def top_10_movies_by_watches(conn):
     print(f"Top 10 movies since {year} on platform matching '{platform}' by watch count:")
     for row in results:
         print(f"Movie ID: {row[0]}, Title: {row[1]}, Watch Count: {row[2]}")
+
+#---------------------------------------------------------------------------------------------
+
 def most_popular_followers(conn, curs, userid):
     query = """
     SELECT m.title, count(w.movieid) as times_watched
