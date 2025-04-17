@@ -109,3 +109,15 @@ def delete_movie(conn, curs, userid):
         return
     curs.execute("DELETE FROM has_movie WHERE collectionid=%s and movieid=%s", (collection, movie))
     conn.commit()
+
+def num_collections(conn, curs):
+    username = input("Type username:\n")
+    query = """
+    SELECT COUNT(name) 
+    FROM collection c
+    JOIN users u ON c.user_id = u.id
+    WHERE u.username = %s
+    """
+    curs.execute(query, (username,))
+    count = curs.fetchone()[0]
+    print(f"{username} has {count} collections")

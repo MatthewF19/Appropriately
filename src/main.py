@@ -7,6 +7,7 @@ from login import login
 from collection import create_collection
 from collection import delete_collection
 from collection import rename_collection
+from collection import num_collections
 from collection import view_collections
 from collection import add_movie
 from collection import delete_movie
@@ -54,6 +55,8 @@ def run_action(conn, curs, userid, action):
             create_collection(conn, curs)
         case "LC":
             view_collections(conn, curs, userid)
+        case "NC":
+            num_collections(conn, curs)
         case "PC":
             watch(conn, userid, "collection")
         case "AC":
