@@ -59,6 +59,10 @@ def view_collections(conn, curs, userid):
     curs.execute(query, (userid,))
     collections = curs.fetchall()
 
+    if not collections:
+        print("You have no collections!")
+        return
+
     for collection in collections:
         print(collection[0], collection[1], str(collection[2]//60) + ":" + str(collection[2]%60))
 
