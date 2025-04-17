@@ -41,20 +41,28 @@ def unfollow_user(conn, follower_id):
 
 
 def get_follower_count(conn, user_id):
+    requested_user_id = input("Enter a user id: ")
+    if not requested_user_id:
+        requested_user_id = user_id
+    requested_user_id = int(requested_user_id)
     with conn.cursor() as cur:
         cur.execute(
             "SELECT COUNT(*) FROM Follow WHERE followedID = %s;",
-            (user_id,)
+            (requested_user_id,)
         )
         count = cur.fetchone()[0]
-        print(f"User {user_id} has {count} followers.")
+        print(f"User {requested_user_id} has {count} followers.")
 
 
 def get_following_count(conn, user_id):
+    requested_user_id = input("Enter a user id: ")
+    if not requested_user_id:
+        requested_user_id = user_id
+    requested_user_id = int(requested_user_id)
     with conn.cursor() as cur:
         cur.execute(
             "SELECT COUNT(*) FROM Follow WHERE followerID = %s;",
-            (user_id,)
+            (requested_user_id,)
         )
         count = cur.fetchone()[0]
-        print(f"User {user_id} follows {count} users.")
+        print(f"User {requested_user_id} follows {count} users.")
