@@ -99,7 +99,7 @@ def top_10_movies_by_watches(conn):
 
 #---------------------------------------------------------------------------------------------
 
-def most_popular_followers(conn, curs, userid):
+def most_popular_followers(curs, userid):
     query = """
     SELECT m.title, count(w.movieid) as times_watched
     FROM follow f
@@ -113,3 +113,32 @@ def most_popular_followers(conn, curs, userid):
     curs.execute(query, (userid,))
     for i, (title, times_watched) in enumerate(curs.fetchall()):
         print(f"#{i + 1}: {title}")
+
+def watch_history_recs(curs, userid):
+
+    query = """
+    SELECT m.title, AVG(r.rating) AS average_rating
+    FROM watches w
+    JOIN genre_of g ON w.movieid = g.movieid
+    JOIN movie m ON m.id = w.movieid
+    LEFT JOIN rates r ON r.movieid = m.id
+    WHERE w.userid IN (
+        SELECT w2.userid
+        FROM watches w2
+        JOIN genre_of g2 ON w2.movieid = g2.movieid
+        WHERE g2.genreid IN (
+            SELECT g.genreid
+            FROM watches w
+            JOIN genre_of g ON w.movieid = g.movieid
+            WHERE w2.userid = %s
+        )
+    )
+    GROUP BY m.title
+    ORDER BY average_rating DESC
+    LIMIT 10;
+    """
+
+    curs.execute(query, (userid, ))
+
+    for x in curs.fetchall():
+        print(x[0])
