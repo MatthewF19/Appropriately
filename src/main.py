@@ -24,6 +24,8 @@ from watch import watch
 from rate import rate_movie
 from top_movies import top5_new_releases
 from top_movies import top20_movies_currently
+from top_movies import most_popular_followers
+from top_movies import watch_history_recs
 
 
 def commands():
@@ -46,6 +48,8 @@ def commands():
     print("Unfollow user:                   UU")
     print("Get top 5 new releases:          T5N")
     print("Get top 20 movies currently      T20C")
+    print("Get movies from followers        PF")
+    print("Get movies from watch history    WHR")
     print("Exit:                            Q")
 
 
@@ -91,6 +95,10 @@ def run_action(conn, curs, userid, action):
             top5_new_releases(curs)
         case "T20C":
             top20_movies_currently(curs)
+        case "PF":
+            most_popular_followers(curs, userid)
+        case "WHR":
+            watch_history_recs(curs, userid)
         case "Q":
             # nop
             return "exit"
