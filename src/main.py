@@ -31,6 +31,7 @@ from top_movies import watch_history_recs
 def commands():
     print("Create a collection:             CC")
     print("List all collections:            LC")
+    print("Get number of collections:       NC")
     print("Play collection:                 PC")
     print("Add movie to collection:         AC")
     print("Remove movie from collection:    RMC")
