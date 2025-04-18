@@ -115,6 +115,10 @@ def most_popular_followers(curs, userid):
         print(f"#{i + 1}: {title}")
 
 def watch_history_recs(curs, userid):
+    curs.execute("SELECT * FROM watches WHERE userid=%s", (userid,))
+    if not len(curs.fetchall()):
+        print("No watch history")
+        return
 
     query = """
     SELECT m.title, AVG(r.rating) AS average_rating
